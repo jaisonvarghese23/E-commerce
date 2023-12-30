@@ -30,13 +30,40 @@ class ProductController extends Controller
         $extension= $request->image->extension();
         $filename=Str::random(6)."_".time()."_product.".$extension;
        $request->image->storeAs('images',$filename);
-
+       $input['image']=$filename;
       }
-      $input['image']=$filename;
+
       Product::create($input);
       return redirect()->route('admin.product.create')->with('meassage','Product Saved sucessfully');
 
       // return request()->all();
+    }
+
+    public function edit($id){
+        $product=Product::find($id);
+        $catagories=Catagory::all();
+        return view('Admin.products.update',compact('product','catagories'));
+
+
+    }
+    public function update(ProductSaveRequest $request){
+        $input=$request->validated();
+        $product=Product::find($request->id);
+        // return $product;
+        if($request->hasFile('image')){
+            Storage::delete('images/'.$product->image);
+            $extension= $request->image->extension();
+            $filename=Str::random(6)."_".time()."_product.".$extension;
+           $request->image->storeAs('images',$filename);
+           $input['image']=$filename;
+
+        }
+
+        $product->update($input);
+        return redirect()->route('admin.product.list')->with('meassage','Product updated sucessfully');
+
+
+
     }
     public function delete($id){
 

@@ -35,6 +35,7 @@
                       <th style="width: 10px">#</th>
                       <th>Image</th>
                       <th>Name</th>
+                      <th>Catagory Name</th>
                       <th>Price</th>
                       <th>Catagory</th>
                       <th>Status</th>
@@ -48,11 +49,12 @@
                         <td>{{$loop->iteration}}</td>
                         <td><img src="{{asset("storage/images/".$product->image)}}" width="100px"alt="smsm"></td>
                         <td>{{$product->name}}</td>
+                        <td>{{$product->catagory->name}}</td>
                         <td>{{number_format($product->price,2)}}</td>
                         <td>{{$product->catagory_id}}</td>
                         <td>{{$product->status}}</td>
                         <td>{{$product->is_favourite}}</td>
-                        <td><a href="" class="btn btn-info btn-sm">Edit</a>
+                        <td><a href="{{route('admin.product.edit',$product->id)}}" class="btn btn-info btn-sm">Edit</a>
                        <a href="{{route('admin.product.delete',$product->id)}}" class="btn btn-danger btn-sm">Delete</a></td>
                        </tr>
                     @endforeach

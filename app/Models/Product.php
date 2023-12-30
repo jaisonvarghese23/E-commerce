@@ -11,6 +11,9 @@ class Product extends Model
 {
     use HasFactory;
     protected $guarded =[];
+    public function catagory(){
+        return $this->hasOne(Catagory::class,'id','catagory_id');
+    }
     protected function status(): Attribute
     {
         return Attribute::make(
